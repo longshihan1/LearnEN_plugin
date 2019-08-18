@@ -49,6 +49,9 @@ public class SettingState implements PersistentStateComponent<SettingState> {
 
 
     public SettingConfig getConfig() {
+        if (initConfig==null){
+            initConfig=new SettingConfig();
+        }
         return initConfig;
     }
 

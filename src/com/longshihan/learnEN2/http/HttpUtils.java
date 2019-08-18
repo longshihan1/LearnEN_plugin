@@ -18,6 +18,7 @@ public class HttpUtils {
 
     /** GET请求 */
     public  void doGet(String url) {
+        System.out.println(""+url);
         ResponceInfo responceInfo=new ResponceInfo();
         InputStream in = null;
         ByteArrayOutputStream baos = null;

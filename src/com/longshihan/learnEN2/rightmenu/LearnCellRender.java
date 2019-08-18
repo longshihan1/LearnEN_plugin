@@ -19,7 +19,9 @@ public class LearnCellRender implements ListCellRenderer {
                 Box jPanel=Box.createVerticalBox();    //创建横向Box容器
 //                jPanel.setBackground(Color.WHITE);
                 if (data.getWord() != null) {
-                    jPanel.add(new JLabel(data.getWord().getWordHead()));
+                    JLabel titleLabel=new JLabel(data.getWord().getWordHead());
+                    titleLabel.setFont(new Font(null,Font.ITALIC,20));
+                    jPanel.add(titleLabel);
                     if (data.getWord().getContent() != null) {
                         jPanel.add(new JLabel("美：[" + data.getWord().getContent().getUsphone() + "]"));
                         jPanel.add(new JLabel("英：[" + data.getWord().getContent().getUsphone() + "]"));

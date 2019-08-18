@@ -28,6 +28,8 @@
     <!-- Add your extensions here -->
     <toolWindow id="learnEnPlugin" secondary="true" anchor="right"
                 factoryClass="com.longshihan.learnEN2.rightmenu.LearnToolsWindowFactory"/>
+    <applicationService serviceInterface="com.longshihan.learnEN2.setting.SettingState"
+                        serviceImplementation="com.longshihan.learnEN2.setting.SettingState"/>
   </extensions>
 
   <actions>
