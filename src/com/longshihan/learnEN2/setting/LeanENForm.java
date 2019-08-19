@@ -15,9 +15,10 @@ public class LeanENForm {
 
     private JLabel textJlabel;
     public JPanel mainPanel = new JBPanel();
-    private TextFieldWithBrowseButton fileFolderBtn = new TextFieldWithBrowseButton();
+
     private JComboBox jCheckBoxPromt=new JComboBox();
     private JComboBox jCheckBoxHistory=new JComboBox();
+    private JComboBox jCheckNoxRel=new JComboBox();
 
     public LeanENForm() {
 
@@ -32,41 +33,29 @@ public class LeanENForm {
 //        mainPanel.add(ttitlePane);
         JPanel stateMainPane = new JPanel(new FlowLayout(0));
         JPanel statusPane=new JPanel();
-        statusPane.add(new JLabel("是否开启每日提醒："));
+        statusPane.add(new JLabel("是否打开近义词显示："));
         jCheckBoxPromt.addItem("TRUE");
         jCheckBoxPromt.addItem("FALSE");
         statusPane.add(jCheckBoxPromt);
         stateMainPane.add(statusPane);
-
         JPanel historyPane=new JPanel();
-        historyPane.add(new JLabel("是否开启收藏："));
+        historyPane.add(new JLabel("是否打开例句显示："));
         jCheckBoxHistory.addItem("TRUE");
         jCheckBoxHistory.addItem("FALSE");
         historyPane.add(jCheckBoxHistory);
         stateMainPane.add(historyPane);
-
+        JPanel relPane=new JPanel();
+        relPane.add(new JLabel("是否打开同根显示："));
+        jCheckNoxRel.addItem("TRUE");
+        jCheckNoxRel.addItem("FALSE");
+        relPane.add(jCheckNoxRel);
+        stateMainPane.add(relPane);
         mainPanel.add(stateMainPane);
-
-        JPanel pathMainPane = new JPanel(new FlowLayout(0));
-        JPanel pathPane=new JPanel();
-        pathPane.add(new JLabel("字典路径"));
-        final FileChooserDescriptor fileChooserDescriptor =
-                new FileChooserDescriptor(true, false, false, false, false, false);
-        fileFolderBtn.addBrowseFolderListener(
-                IdeBundle.message("title.browse.icon"),
-                null,
-                null, fileChooserDescriptor);
-
-        pathPane.add(fileFolderBtn);
-        pathMainPane.add(pathPane);
-        mainPanel.add(pathMainPane);
         SettingConfig config = SettingState.getInstance().getConfig();
         if (config != null) {
-            this.jCheckBoxPromt.setSelectedIndex(config.isStartMsg()?0:1);
-            this.jCheckBoxHistory.setSelectedIndex(config.isAddHistory()?0:1);
-            if (StringUtils.isNotBlank(config.getFilePath())) {
-                this.fileFolderBtn.setText(config.getFilePath());
-            }
+            this.jCheckBoxPromt.setSelectedIndex(config.isSyno()?0:1);
+            this.jCheckBoxHistory.setSelectedIndex(config.isSentences()?0:1);
+            this.jCheckNoxRel.setSelectedIndex(config.isRelWord()?0:1);
         }
 
     }
@@ -80,9 +69,9 @@ public class LeanENForm {
         if (config==null){
             config=new SettingConfig();
         }
-        config.setAddHistory(jCheckBoxHistory.getSelectedIndex()==0);
-        config.setStartMsg(jCheckBoxPromt.getSelectedIndex()==0);
-        config.setFilePath(fileFolderBtn.getText());
+        config.setSyno(jCheckBoxHistory.getSelectedIndex()==0);
+        config.setSentences(jCheckBoxPromt.getSelectedIndex()==0);
+        config.setRelWord(jCheckNoxRel.getSelectedIndex()==0);
         config.setLearnType("EN");
         SettingState.getInstance().setConfig(config);
 

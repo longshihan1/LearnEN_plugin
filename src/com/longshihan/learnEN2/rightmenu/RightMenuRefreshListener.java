@@ -1,5 +1,6 @@
 package com.longshihan.learnEN2.rightmenu;
 
 public interface RightMenuRefreshListener {
-    void onRefresh(int pageSize,String dictId);
+    void onNext(int pageSize,String dictId);
+    void onRefresh();
 }

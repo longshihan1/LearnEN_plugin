@@ -1,12 +1,11 @@
 <idea-plugin>
-  <id>com.your.company.unique.plugin.id</id>
-  <name>Plugin display name here</name>
+  <id>com.longshihan.learnEN</id>
+  <name>程序员每日英语</name>
   <version>1.0</version>
-  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+  <vendor email="577093937@qq.com" url="http://longshihan.androider.com">龙逝寒</vendor>
 
   <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+       程序员每日英语<br>
     ]]></description>
 
   <change-notes><![CDATA[
@@ -30,6 +29,8 @@
                 factoryClass="com.longshihan.learnEN2.rightmenu.LearnToolsWindowFactory"/>
     <applicationService serviceInterface="com.longshihan.learnEN2.setting.SettingState"
                         serviceImplementation="com.longshihan.learnEN2.setting.SettingState"/>
+    <applicationConfigurable groupId="tools"
+                             instance="com.longshihan.learnEN2.setting.LearnENSettingConfigurable"/>
   </extensions>
 
   <actions>

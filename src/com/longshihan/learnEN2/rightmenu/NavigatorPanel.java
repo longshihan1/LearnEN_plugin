@@ -11,6 +11,7 @@ import com.intellij.ui.components.JBTextArea;
 import com.intellij.ui.components.JBTextField;
 import com.intellij.ui.treeStructure.SimpleTree;
 import com.longshihan.learnEN2.model.EveryDayWordInfo;
+import com.longshihan.learnEN2.setting.SettingState;
 import com.longshihan.learnEN2.setting.model.SettingConfig;
 
 import javax.swing.*;
@@ -33,6 +34,7 @@ public class NavigatorPanel extends SimpleToolWindowPanel implements DataProvide
     private JComboBox dictcomboBox=new JComboBox();
     private JComboBox pageSizeomboBox=new JComboBox();
     private Map<String,String> dictMap=new HashMap<>();
+    private SettingConfig config;
 
     public NavigatorPanel(ToolWindow toolWindow, Project project, RightMenuRefreshListener listener, SettingConfig config) {
         super(true, true);
@@ -62,13 +64,24 @@ public class NavigatorPanel extends SimpleToolWindowPanel implements DataProvide
             pageSizeomboBox.setSelectedIndex(2);
         }
         toolsPanel.add(pageSizeomboBox);
+        JButton nextButton=new JButton();
+        nextButton.setText("下一页");
+        nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (listener!=null){
+                    listener.onNext(pageSizeomboBox.getSelectedIndex()*20+20, (String) dictMap.keySet().toArray()[dictcomboBox.getSelectedIndex()]);
+                }
+            }
+        });
+        toolsPanel.add(nextButton);
         JButton refreshButton=new JButton();
         refreshButton.setText("刷新");
         refreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (listener!=null){
-                    listener.onRefresh(pageSizeomboBox.getSelectedIndex()*20+20, (String) dictMap.keySet().toArray()[dictcomboBox.getSelectedIndex()]);
+                    listener.onRefresh();
                 }
             }
         });
@@ -79,7 +92,7 @@ public class NavigatorPanel extends SimpleToolWindowPanel implements DataProvide
         treePanel   .add(scrollPane,BorderLayout.CENTER);    //将面板增加到边界布局中央
         list=new JBList();
         //限制只能选择一个元素
-        list.setCellRenderer(new LearnCellRender());
+        list.setCellRenderer(new LearnCellRender(config));
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane.setViewportView(list);    //在滚动面板中显示列表
         list.setModel(wordElement);
@@ -88,6 +101,7 @@ public class NavigatorPanel extends SimpleToolWindowPanel implements DataProvide
     }
 
     public void putData(EveryDayWordInfo info1) {
+        config= SettingState.getInstance().getConfig();
         list.setModel(new WordElement(info1.getWords()));
     }
 }

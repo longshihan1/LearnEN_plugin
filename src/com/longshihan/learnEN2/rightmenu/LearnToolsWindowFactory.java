@@ -1,6 +1,7 @@
 package com.longshihan.learnEN2.rightmenu;
 
 import com.google.gson.Gson;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
@@ -22,10 +23,12 @@ public class LearnToolsWindowFactory implements ToolWindowFactory, RightMenuRefr
     HttpUtils httpUtils;
     NavigatorPanel navigatorPanel;
     SettingConfig config;
+    int startIndex;
+    String dictId;
+    int pageSize;
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         config = SettingState.getInstance().getConfig();
         if (config == null) {
@@ -37,6 +40,9 @@ public class LearnToolsWindowFactory implements ToolWindowFactory, RightMenuRefr
         if (config.getPagesize() == 0) {
             config.setPagesize(20);
         }
+        startIndex=config.getStartIndex();
+        dictId=config.getDictId();
+        pageSize=config.getPagesize();
         navigatorPanel = new NavigatorPanel(toolWindow, project, this, config);
         Content content = contentFactory.createContent(navigatorPanel, "", false);
         toolWindow.getContentManager().addContent(content);
@@ -47,19 +53,29 @@ public class LearnToolsWindowFactory implements ToolWindowFactory, RightMenuRefr
     }
 
     public void getDataUrl() {
-        int endIndex = config.getStartIndex() + config.getPagesize();
-        httpUtils.doGet("http://reciteword.youdao.com/reciteword/v1/words?bookId=" + config.getDictId() + "&wordRanks=%5B" + config.getStartIndex() + "-" + endIndex + "%5D");
+        int endIndex = startIndex + pageSize;
+        httpUtils.doGet("http://reciteword.youdao.com/reciteword/v1/words?bookId=" +dictId + "&wordRanks=%5B" + startIndex + "-" + endIndex + "%5D");
     }
 
     @Override
-    public void onRefresh(int pageSize, String dictId) {
+    public void onNext(int pageSize, String dictId) {
+        config.setPagesize(pageSize);
+        this.pageSize=pageSize;
         if (!dictId.equals(config.getDictId())) {
             config.setStartIndex(0);
+            startIndex=0;
+        }else {
+            config.setStartIndex(config.getStartIndex()+config.getPagesize());
+            startIndex=startIndex+pageSize;
         }
         config.setDictId(dictId);
-        config.setStartIndex(config.getStartIndex()+config.getPagesize());
-        config.setPagesize(pageSize);
+        this.dictId=dictId;
         SettingState.getInstance().setConfig(config);
+        getDataUrl();
+    }
+
+    @Override
+    public void onRefresh() {
         getDataUrl();
     }
 

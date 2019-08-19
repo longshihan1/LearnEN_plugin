@@ -5,10 +5,14 @@ public class SettingConfig {
     private String learnType;
     private boolean startMsg;
     private boolean addHistory;
-
     private int startIndex;
     private String dictId;
     private int pagesize;
+    private boolean syno=true;//近义词
+    private boolean sentences=true;//例句
+    private boolean relWord=true;//同根
+
+
 
     public int getStartIndex() {
         return startIndex;
@@ -64,5 +68,29 @@ public class SettingConfig {
 
     public void setAddHistory(boolean addHistory) {
         this.addHistory = addHistory;
+    }
+
+    public boolean isSyno() {
+        return syno;
+    }
+
+    public void setSyno(boolean syno) {
+        this.syno = syno;
+    }
+
+    public boolean isSentences() {
+        return sentences;
+    }
+
+    public void setSentences(boolean sentences) {
+        this.sentences = sentences;
+    }
+
+    public boolean isRelWord() {
+        return relWord;
+    }
+
+    public void setRelWord(boolean relWord) {
+        this.relWord = relWord;
     }
 }
