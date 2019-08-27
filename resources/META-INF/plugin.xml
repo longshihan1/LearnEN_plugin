@@ -1,6 +1,6 @@
 <idea-plugin>
   <id>com.longshihan.learnEN</id>
-  <name>程序员每日英语</name>
+  <name>LearnEN</name>
   <version>1.0</version>
   <vendor email="577093937@qq.com" url="http://longshihan.androider.com">龙逝寒</vendor>
 
@@ -15,15 +15,19 @@
   </change-notes>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="173.0"/>
+  <idea-version since-build="171.0"/>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
        on how to target different products -->
   <!-- uncomment to enable plugin in all products
   <depends>com.intellij.modules.lang</depends>
   -->
-
+  <depends>com.intellij.modules.lang</depends>
   <extensions defaultExtensionNs="com.intellij">
+<!--    <annotator language="XML" implementationClass="com.longshihan.learnEN2.Action.UsageCountAnnotatar"/>-->
+<!--    <codeInsight.lineMarkerProvider language="XML" implementationClass="com.longshihan.learnEN2.Action.UsageCountLineProvider"/>-->
+<!--    <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.longshihan.learnEN2.TestProvider"/>-->
+<!--    <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.longshihan.learnEN2.Action.TsestProvider"/>-->
     <!-- Add your extensions here -->
     <toolWindow id="learnEnPlugin" secondary="true" anchor="right"
                 factoryClass="com.longshihan.learnEN2.rightmenu.LearnToolsWindowFactory"/>
@@ -31,10 +35,20 @@
                         serviceImplementation="com.longshihan.learnEN2.setting.SettingState"/>
     <applicationConfigurable groupId="tools"
                              instance="com.longshihan.learnEN2.setting.LearnENSettingConfigurable"/>
+    <applicationConfigurable  groupId="tools" instance="com.longshihan.learnEN2.Action.CountColorConfiguration"/>
   </extensions>
 
   <actions>
+<!--    <action id="FindUsageAction" class="com.longshihan.learnEN2.Action.FindUsageAction" text="Find Usage" description="Start Find">-->
+<!--    <add-to-group group-id="AnalyzeMenu" anchor="last"/>-->
+<!--    </action>-->
+      <action id="SCANAction" class="com.longshihan.learnEN2.Action.ScanAction" text="Scan ACTION" description="Start Scan">
+          <add-to-group group-id="AnalyzeMenu" anchor="last"/>
+      </action>
     <!-- Add your actions here -->
+<!--      <action id="com.longshihan.FindAction" class="com.longshihan.learnEN2.Action.FindAction" text="发现Action">-->
+<!--          <add-to-group group-id="FileMenu" anchor="first"/>-->
+<!--      </action>-->
   </actions>
 
 </idea-plugin>

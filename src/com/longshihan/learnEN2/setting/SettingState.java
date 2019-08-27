@@ -16,14 +16,7 @@ import java.util.Map;
 @State(name = "SettingConfig",storages = {@com.intellij.openapi.components.Storage(value = "learnEn-config.xml",
         roamingType = com.intellij.openapi.components.RoamingType.DISABLED)})
 public class SettingState implements PersistentStateComponent<SettingState> {
-    public static String PATH;
-    private static String INITNAME;
     private SettingConfig initConfig;
-    static {
-        SettingState.PATH = "learnEN-plugin";
-        SettingState.INITNAME = "initConfig";
-    }
-
     public SettingState() {
 
     }
@@ -60,9 +53,6 @@ public class SettingState implements PersistentStateComponent<SettingState> {
         initConfig=config;
     }
 
-    public String getTempFilePath() {
-        return getConfig().getFilePath() + File.separator + SettingState.PATH + File.separator;
-    }
 
     public void savePath(String path) {
         PasswordSafe.getInstance().storePassword(null, getClass(), "learnDictPath", path != null ? path : "");

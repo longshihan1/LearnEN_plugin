@@ -12,25 +12,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class LeanENForm {
-
     private JLabel textJlabel;
     public JPanel mainPanel = new JBPanel();
-
     private JComboBox jCheckBoxPromt=new JComboBox();
     private JComboBox jCheckBoxHistory=new JComboBox();
     private JComboBox jCheckNoxRel=new JComboBox();
-
-    public LeanENForm() {
-
-    }
-
-
+    public LeanENForm() {}
     public void createUI() {
         mainPanel.setLayout(new GridLayout(10,0));
-//        JPanel ttitlePane = new JPanel(new FlowLayout(0));
-//        textJlabel=new JLabel("程序员外语学习配置项");
-//        ttitlePane.add(textJlabel);
-//        mainPanel.add(ttitlePane);
         JPanel stateMainPane = new JPanel(new FlowLayout(0));
         JPanel statusPane=new JPanel();
         statusPane.add(new JLabel("是否打开近义词显示："));
@@ -57,7 +46,6 @@ public class LeanENForm {
             this.jCheckBoxHistory.setSelectedIndex(config.isSentences()?0:1);
             this.jCheckNoxRel.setSelectedIndex(config.isRelWord()?0:1);
         }
-
     }
 
     public JPanel getContentPane() {
